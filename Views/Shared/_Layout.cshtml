@@ -27,7 +27,7 @@
                     <ul class="nav navbar-nav">
                         <li><a asp-controller="Home" asp-action="Index">Home</a></li>
                         <li><a asp-controller="Cake" asp-action="List">Cakes</a></li>
-
+                        @await Component.InvokeAsync("ShoppingCartSummary")
                     </ul>
                 </div>
             </div>
@@ -36,7 +36,7 @@
         <div class="row">
             <div class="col-md-3">
                 <p class="lead">
-                    <img  class="img-responsive" alt="Cake Shop" src="~/img/logo.jpg" style ="width: 100px; height: 100px; border-radius: 50%" />
+                    <img  class="img-responsive" alt="Cake Shop" src="~/img/cakeshopLogo.png" style ="width: 200px; height: 200px; border-radius: 50%" />
                 </p>
             </div>
             <div class="col-md-9">

@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using CakeShop.ViewModels;
 
 namespace CakeShop.Controllers
 {
@@ -19,7 +20,34 @@ namespace CakeShop.Controllers
         }
         public IActionResult Index()
         {
-            return View();
+            var items = _shoppingCart.GetShoppingCartItems();
+            _shoppingCart.shoppingCartItems = items;
+            var ShoppingCartViewModel = new ShoppingCartViewModel()
+            {
+                shoppingCart = _shoppingCart,
+                ShoppinCartTotal = _shoppingCart.GetShoppingCartTotal()
+            };
+            return View(ShoppingCartViewModel);
+        }
+        public RedirectToActionResult AddToShoppingCart(int cakeId)
+        {
+            var selectedCake = _cakeRepository.AllCakes.FirstOrDefault(c => c.CakeId == cakeId);
+            if(selectedCake != null)
+            {
+                _shoppingCart.AddToCart(selectedCake, 1);
+            }
+           
+            return RedirectToAction("Index");
+        }
+        public RedirectToActionResult RemoveFromCart(int cakeId)
+        {
+            var selectedCake = _cakeRepository.AllCakes.FirstOrDefault(c => c.CakeId == cakeId);
+           
+            if(selectedCake != null)
+            {
+                _shoppingCart.RemoveFromCart(selectedCake);
+            }
+            return RedirectToAction("Index");
         }
     }
 }
