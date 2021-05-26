@@ -1,11 +1,11 @@
 ﻿@model HomeViewModel
     <partial name="_Carousel" />
-<h2>Pies of the week</h2>
+<h2>Cakes of the week</h2>
 <h4>Our weekly selection - just for you!</h4>
 
 <div class="row">
-    @*@foreach(var cake in Model.CakesOfTheWeek)
+    @foreach(var cake in Model.CakesOfTheWeek)
     {
         <partial name="_CakeList" model="cake" />
-    }*@
+    }
 </div>

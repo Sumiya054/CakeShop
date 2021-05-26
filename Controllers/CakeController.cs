@@ -18,12 +18,25 @@ namespace CakeShop.Controllers
             _cakeRepository = cakeRepository;
             _categoryRepository = categoryRepository;
         }
-        public ViewResult List()
+        public ViewResult List(string category)
         {
-            CakesListViewModels cakesListViewModels = new CakesListViewModels();
-            cakesListViewModels.Cakes = _cakeRepository.AllCakes;
-            cakesListViewModels.CurrentCategory = "Cheese Cake";
-            return View(cakesListViewModels);
+            IEnumerable<Cake> cakes;
+            string currentCategory;
+            if (string.IsNullOrEmpty(category))
+            {
+                cakes = _cakeRepository.AllCakes.OrderBy(c => c.CakeId);
+                currentCategory = "All Cakes";
+            }
+            else
+            {
+                cakes = _cakeRepository.AllCakes.Where(c => c.Category.CategoryName == category).OrderBy(c => c.CakeId);
+                currentCategory = _categoryRepository.AllCategories.FirstOrDefault(c => c.CategoryName == category)?.CategoryName;
+            }
+            
+            return View(new CakesListViewModels { 
+            Cakes = cakes,
+            CurrentCategory = currentCategory
+            });
         }
         public IActionResult Details(int id)
         {

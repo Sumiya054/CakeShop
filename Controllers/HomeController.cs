@@ -22,7 +22,7 @@ namespace CakeShop.Controllers
             {
                 CakesOfTheWeek = _cakeRepository.CakesOfTheWeek 
             };
-            return View();
+            return View(homeViewModel);
         }
     }
 }
