@@ -5,7 +5,8 @@ using System.Threading.Tasks;
 
 namespace CakeShop.Models
 {
-    interface IOrderRepository
+    public interface IOrderRepository
     {
+        void CreateOrder(Order order);
     }
 }
