@@ -19,18 +19,27 @@ namespace CakeShop.Models
         {
             order.OrderPlaced = DateTime.Now;
             _appDbContext.Order.Add(order);
+
+            order.OrderDetails = new List<OrderDetail>();
             var shoppingCartItems = _shoppingCart.shoppingCartItems;
-            foreach(var item in shoppingCartItems)
+            decimal unitPrice = 0;
+            foreach (var shoppingCartItem in shoppingCartItems)
             {
-                var orderDetails = new OrderDetail()
+                var orderDetail = new OrderDetail
                 {
-                    Amount =item.Amount,
-                    CakeId = item.cake.CakeId,
-                    OrderId = order.OrderId,
-                    Price = item.cake.Price
+                    Amount = shoppingCartItem.Amount,
+                    CakeId = shoppingCartItem.cake.CakeId,
+                    Price = shoppingCartItem.cake.Price
+
                 };
-                _appDbContext.OrderDetail.Add(orderDetails);
+                unitPrice = shoppingCartItem.cake.Price + unitPrice;
+
+                order.OrderDetails.Add(orderDetail);
+
+
             }
+            order.OrderTotal = unitPrice;
+            _appDbContext.Order.Add(order);
             _appDbContext.SaveChanges();
         }
     }

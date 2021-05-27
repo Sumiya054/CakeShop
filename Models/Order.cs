@@ -9,7 +9,7 @@ namespace CakeShop.Models
 {
     public class Order
     {
-        [BindNever]
+      
         public int OrderId { get; set; }
 
         public List<OrderDetail> OrderDetails { get; set; }

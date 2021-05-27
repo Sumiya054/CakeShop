@@ -21,5 +21,22 @@ namespace CakeShop.Controllers
         {
             return View();
         }
+        [HttpPost]
+        public IActionResult CheckOut(Order order)
+        {
+            var items = _shoppingCart.GetShoppingCartItems();
+            _shoppingCart.shoppingCartItems = items;
+            if(_shoppingCart.shoppingCartItems.Count == 0)
+            {
+                ModelState.AddModelError("", "Your cart is empty, add some cakes first");
+            }
+            if (ModelState.IsValid)
+            {
+                _orderRepository.CreateOrder(order);
+                _shoppingCart.ClearCart();
+                return RedirectToAction("CheckOutComplete");
+            }
+            return View(order);
+        }
     }
 }
